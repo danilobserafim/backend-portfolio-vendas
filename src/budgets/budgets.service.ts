@@ -30,8 +30,19 @@ export class BudgetsService {
     }
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} budget`;
+  async findOne(email: string) {
+    try {
+      return await this.prisma.budgets.findMany({
+        where: {
+          email,
+        },
+      });
+    } catch (error) {
+      return {
+        title: 'ERROR',
+        message: 'Database error',
+      };
+    }
   }
 
   update(id: string, updateBudgetDto: UpdateBudgetDto) {

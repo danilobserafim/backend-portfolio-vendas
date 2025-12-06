@@ -6,12 +6,12 @@ import { PrismaClient } from 'generated/prisma/client';
 export class PrismaService extends PrismaClient {
   constructor() {
     const adapter = new PrismaMariaDb({
-      host: 'db4free.net',
-      port: 3306,
-      connectionLimit: 5,
-      user: 'danilobserafim',
-      password: 'senha1973',
-      database: 'barfim_ecommerce',
+      user: process.env.DB_USER,
+      host: process.env.DB_HOST,
+      password: process.env.DB_PASSWORD,
+      port: Number(process.env.DB_PORT),
+      database: process.env.DATABASE,
+      connectionLimit: Number(process.env.DB_LIMIT),
     });
 
     super({ adapter });

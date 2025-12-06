@@ -25,9 +25,9 @@ export class BudgetsController {
     return this.budgetsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.budgetsService.findOne(id);
+  @Get(':email')
+  findOne(@Param('email') email: string) {
+    return this.budgetsService.findOne(email);
   }
 
   @Patch(':id')
