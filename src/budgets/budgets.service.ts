@@ -49,7 +49,9 @@ export class BudgetsService {
     return `This action updates a #${id} budget`;
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} `;
+  async remove(id: string) {
+    return await this.prisma.budgets.delete({
+      where: { id },
+    });
   }
 }
