@@ -30,11 +30,11 @@ export class BudgetsService {
     }
   }
 
-  async findOne(email: string) {
+  async findOne(id: string) {
     try {
-      return await this.prisma.budgets.findMany({
+      return await this.prisma.budgets.findFirst({
         where: {
-          email,
+          id: id,
         },
       });
     } catch (error) {
