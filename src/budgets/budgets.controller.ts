@@ -16,8 +16,16 @@ export class BudgetsController {
   constructor(private readonly budgetsService: BudgetsService) {}
 
   @Post()
-  create(@Body() { descricao, email, nome, tipoProjeto }: CreateBudgetDto) {
-    return this.budgetsService.create({ descricao, email, nome, tipoProjeto });
+  create(
+    @Body() { descricao, email, nome, tipoProjeto, typeId }: CreateBudgetDto,
+  ) {
+    return this.budgetsService.create({
+      descricao,
+      email,
+      nome,
+      tipoProjeto,
+      typeId,
+    });
   }
 
   @Get()

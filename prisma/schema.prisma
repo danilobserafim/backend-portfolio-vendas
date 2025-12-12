@@ -18,6 +18,13 @@ model budgets {
   id String @id @default(uuid()) 
   nome String
   email String
-  tipoProjeto String
   descricao String
+  type projectTypes  @relation(fields: [typeId], references: [id])
+  typeId String
+}
+model projectTypes{
+  id String @id @default(uuid())
+  value String
+  description String
+  budgets budgets[]
 }

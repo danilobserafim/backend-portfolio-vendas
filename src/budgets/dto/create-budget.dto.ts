@@ -3,4 +3,5 @@ export class CreateBudgetDto {
   email: string;
   tipoProjeto: string;
   descricao: string;
+  typeId: string;
 }
