@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `budgets` MODIFY `statusId` VARCHAR(191) NOT NULL DEFAULT 'b251f277-c0da-4723-9637-b3e0dc75151b';

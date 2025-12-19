@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { BudgetsModule } from './budgets/budgets.module';
 import { PrismaService } from './prisma/prisma.service';
 import { BudgetTypesModule } from './budget-types/budget-types.module';
+import { BudgetStatusModule } from './budget-status/budget-status.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { BudgetTypesModule } from './budget-types/budget-types.module';
       envFilePath: '.env',
     }),
     BudgetTypesModule,
+    BudgetStatusModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

@@ -17,14 +17,14 @@ export class BudgetsController {
 
   @Post()
   create(
-    @Body() { descricao, email, nome, tipoProjeto, typeId }: CreateBudgetDto,
+    @Body() { descricao, email, nome,  typeId, statusId }: CreateBudgetDto,
   ) {
     return this.budgetsService.create({
       descricao,
       email,
-      nome,
-      tipoProjeto,
+      nome, 
       typeId,
+      statusId
     });
   }
 
@@ -33,9 +33,9 @@ export class BudgetsController {
     return this.budgetsService.findAll();
   }
 
-  @Get(':email')
-  findOne(@Param('email') email: string) {
-    return this.budgetsService.findOne(email);
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.budgetsService.findOne(id);
   }
 
   @Patch(':id')

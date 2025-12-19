@@ -19,16 +19,11 @@ export class BudgetTypesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.budgetTypesService.findOne(+id);
+    return this.budgetTypesService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBudgetTypeDto: UpdateBudgetTypeDto) {
-    return this.budgetTypesService.update(+id, updateBudgetTypeDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.budgetTypesService.remove(+id);
+    return this.budgetTypesService.update(id, updateBudgetTypeDto);
   }
 }

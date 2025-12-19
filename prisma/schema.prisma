@@ -18,13 +18,25 @@ model budgets {
   id String @id @default(uuid()) 
   nome String
   email String
-  descricao String
-  type projectTypes  @relation(fields: [typeId], references: [id])
+  descricao String @db.Text
+  type budgetTypes  @relation(fields: [typeId], references: [id])
   typeId String
+  status budgetStatus @relation(fields: [statusId], references: [id])
+  statusId String @default("b251f277-c0da-4723-9637-b3e0dc75151b")
 }
-model projectTypes{
+
+model budgetTypes{
   id String @id @default(uuid())
   value String
   description String
   budgets budgets[]
+	@@map("projectTypes")
 }
+
+model budgetStatus{
+  id String @id @default(uuid())
+  name String
+  description String
+  budgets budgets[]
+}
+

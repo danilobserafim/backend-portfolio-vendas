@@ -6,16 +6,10 @@ import { UpdateBudgetDto } from './dto/update-budget.dto';
 @Injectable()
 export class BudgetsService {
   constructor(private prisma: PrismaService) {}
-  async create({
-    descricao,
-    email,
-    nome,
-    tipoProjeto,
-    typeId,
-  }: CreateBudgetDto) {
+  async create({descricao, email, nome, typeId, statusId}: CreateBudgetDto) {
     try {
       return await this.prisma.budgets.create({
-        data: { descricao, email, nome, typeId },
+        data: { descricao, email, nome, typeId, statusId },
       });
     } catch (error) {
       return {
@@ -28,7 +22,10 @@ export class BudgetsService {
   async findAll() {
     try {
       return await this.prisma.budgets.findMany({
-        include: { type: true },
+        include: { 
+          type: true,
+          status:true
+         },
       });
     } catch (error) {
       return {
