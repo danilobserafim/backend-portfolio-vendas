@@ -6,7 +6,7 @@ import { UpdateBudgetDto } from './dto/update-budget.dto';
 @Injectable()
 export class BudgetsService {
   constructor(private prisma: PrismaService) {}
-  async create({descricao, email, nome, typeId, statusId}: CreateBudgetDto) {
+  async create({ descricao, email, nome, typeId, statusId }: CreateBudgetDto) {
     try {
       return await this.prisma.budgets.create({
         data: { descricao, email, nome, typeId, statusId },
@@ -22,10 +22,10 @@ export class BudgetsService {
   async findAll() {
     try {
       return await this.prisma.budgets.findMany({
-        include: { 
+        include: {
           type: true,
-          status:true
-         },
+          status: true,
+        },
       });
     } catch (error) {
       return {
@@ -38,9 +38,28 @@ export class BudgetsService {
   async findOne(id: string) {
     try {
       return await this.prisma.budgets.findFirst({
-        include: { type: true },
+        include: { type: true, status: true },
         where: {
           id: id,
+        },
+      });
+    } catch (error) {
+      return {
+        title: 'ERROR',
+        message: 'Database error',
+      };
+    }
+  }
+  async findLike(search: string) {
+    try {
+      return await this.prisma.budgets.findMany({
+        include: { type: true, status: true },
+        where: {
+          OR: [
+            { nome: { contains: search } },
+            { email: { startsWith: search } },
+            { descricao: { contains: search } },
+          ],
         },
       });
     } catch (error) {
@@ -53,6 +72,24 @@ export class BudgetsService {
 
   update(id: string, updateBudgetDto: UpdateBudgetDto) {
     return `This action updates a #${id} budget`;
+  }
+
+  updateStatus(id: string, statusId: any) {
+    try {
+      return this.prisma.budgets.update({
+        data: {
+          statusId,
+        },
+        where: {
+          id,
+        },
+      });
+    } catch (error) {
+      return {
+        status: 'ERROR',
+        message: 'Something went worng!',
+      };
+    }
   }
 
   async remove(id: string) {

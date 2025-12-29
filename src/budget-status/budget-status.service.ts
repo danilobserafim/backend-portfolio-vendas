@@ -5,63 +5,75 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class BudgetStatusService {
-    constructor(private prisma: PrismaService) {}
-  
-  async create({description,name}: CreateBudgetStatusDto) {
+  constructor(private prisma: PrismaService) {}
+
+  async create({ description, name }: CreateBudgetStatusDto) {
     try {
-      return await this.prisma.budgetStatus.create({data: {description,name}});
+      return await this.prisma.budgetStatus.create({
+        data: { description, name },
+      });
     } catch (error) {
-        return {
-          status: "ERROR",
-          message: "Algo deu errado"
-        }      
+      return {
+        status: 'ERROR',
+        message: 'Algo deu errado',
+      };
     }
   }
 
   async findAll() {
     try {
       return this.prisma.budgetStatus.findMany({
-        include:{
-          _count:true
-        }
+        include: {
+          _count: true,
+        },
       });
-      
     } catch (error) {
-         return {
-        status: "ERROR",
-        message: "Database error"
-
-      }
+      return {
+        status: 'ERROR',
+        message: 'Database error',
+      };
     }
   }
 
   async findOne(id: string) {
     try {
-          return await this.prisma.budgetStatus.findFirst({
-            include:{
-              budgets:{
-                include:{
-                  type:true,
-                  status:true
-                }
-              }
+      return await this.prisma.budgetStatus.findFirst({
+        include: {
+          budgets: {
+            include: {
+              type: true,
+              status: true,
             },
-          where:{
-            id
-          }
-
-        });
-    } catch (error) {
-      
-    }
+          },
+        },
+        orderBy: {
+          name: 'asc',
+        },
+        where: {
+          id,
+        },
+      });
+    } catch (error) {}
   }
 
-  async update(id: string, {description,name}: UpdateBudgetStatusDto) {
+  async update(id: string, { description, name }: UpdateBudgetStatusDto) {
     return await this.prisma.budgetStatus.update({
-      data: {description,name},
-      where:{
-        id
-      }
-    }) ;
+      data: { description, name },
+      where: {
+        id,
+      },
+    });
+  }
+  async remove(id: string) {
+    try {
+      return await this.prisma.budgetStatus.delete({
+        where: { id },
+      });
+    } catch (error) {
+      return {
+        status: 'Error',
+        message: 'Something went wrong!',
+      };
+    }
   }
 }

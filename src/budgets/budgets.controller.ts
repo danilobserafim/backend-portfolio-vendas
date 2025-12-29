@@ -17,14 +17,14 @@ export class BudgetsController {
 
   @Post()
   create(
-    @Body() { descricao, email, nome,  typeId, statusId }: CreateBudgetDto,
+    @Body() { descricao, email, nome, typeId, statusId }: CreateBudgetDto,
   ) {
     return this.budgetsService.create({
       descricao,
       email,
-      nome, 
+      nome,
       typeId,
-      statusId
+      statusId,
     });
   }
 
@@ -38,9 +38,21 @@ export class BudgetsController {
     return this.budgetsService.findOne(id);
   }
 
+  @Get('like/:search')
+  findLike(@Param('search') search: string) {
+    return this.budgetsService.findLike(search);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBudgetDto: UpdateBudgetDto) {
     return this.budgetsService.update(id, updateBudgetDto);
+  }
+  @Patch('status/:id')
+  updateStatus(
+    @Param('id') id: string,
+    @Body() { statusId }: { statusId: string },
+  ) {
+    return this.budgetsService.updateStatus(id, statusId);
   }
 
   @Delete(':id')

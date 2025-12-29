@@ -6,52 +6,59 @@ import { UpdateBudgetTypeDto } from './dto/update-budget-type.dto';
 @Injectable()
 export class BudgetTypesService {
   constructor(private prisma: PrismaService) {}
-  async create({description,value}: CreateBudgetTypeDto) {
+  async create({ description, value }: CreateBudgetTypeDto) {
     try {
       return await this.prisma.budgetTypes.create({
-      data: {description,value}
-    });
+        data: { description, value },
+      });
     } catch (error) {
       return {
-        status: "ERROR",
-        message:"Database error"
-      }
+        status: 'ERROR',
+        message: 'Database error',
+      };
     }
   }
 
   async findAll() {
     try {
       return await this.prisma.budgetTypes.findMany({
-      include:{
-        _count:true
-      }
-    });
+        include: {
+          _count: true,
+        },
+        orderBy: {
+          value: 'asc',
+        },
+      });
     } catch (error) {
       return {
-        status: "ERROR",
-        message: "Database error"
-
-      }
+        status: 'ERROR',
+        message: 'Database error',
+      };
     }
   }
 
   async findOne(id: string) {
     return await this.prisma.budgetTypes.findFirst({
       where: {
-        id
+        id,
       },
-      include:{
-        budgets:true
-      }
+      include: {
+        budgets: {
+          include: {
+            status: true,
+            type: true,
+          },
+        },
+      },
     });
   }
 
-  async update(id: string, {description, value}: UpdateBudgetTypeDto) {
+  async update(id: string, { description, value }: UpdateBudgetTypeDto) {
     return await this.prisma.budgetTypes.update({
-      data: {description, value},
-      where:{
-        id
-      }
-    }) ;
+      data: { description, value },
+      where: {
+        id,
+      },
+    });
   }
 }
