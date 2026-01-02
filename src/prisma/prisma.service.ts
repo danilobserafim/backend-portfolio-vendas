@@ -4,6 +4,7 @@ import { PrismaClient } from 'generated/prisma/client';
 
 @Injectable()
 export class PrismaService extends PrismaClient {
+  [x: string]: any;
   constructor() {
     const adapter = new PrismaMariaDb({
       user: process.env.DB_USER,
