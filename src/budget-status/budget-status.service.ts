@@ -23,9 +23,6 @@ export class BudgetStatusService {
   async findAll() {
     try {
       return await this.prisma.budgetStatus.findMany({
-        include: {
-          _count: true,
-        },
         orderBy: {
           name: 'asc',
         },
