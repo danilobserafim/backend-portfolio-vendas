@@ -24,7 +24,15 @@ export class BudgetStatusService {
     try {
       return this.prisma.budgetStatus.findMany({
         include: {
-          _count: true,
+          budgets: {
+            include: {
+              type: true,
+              status: true,
+            },
+          },
+        },
+        orderBy: {
+          name: 'asc',
         },
       });
     } catch (error) {
