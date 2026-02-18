@@ -8,5 +8,6 @@ export class AppController {
   @Get()
   getHello(): string {
     return this.appService.getHello();
+    //algo para retornar o nome do usuário logado
   }
 }
